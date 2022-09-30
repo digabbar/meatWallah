@@ -1,14 +1,9 @@
 const mongoose = require("mongoose");
 
 const connectDatabase = () => {
-  mongoose
-    .connect(process.env.DB_LOCAL_URL)
-    .then((con) => {
-      console.log("mongoDB connected");
-    })
-    .catch(() => {
-      console.log("mongoDB disconnected");
-    });
+  mongoose.connect(process.env.DB_LOCAL_URL).then((con) => {
+    console.log("mongoDB connected");
+  });
 };
 
 module.exports = connectDatabase;
