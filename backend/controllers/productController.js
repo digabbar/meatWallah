@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const APIFeatures = require("../utils/apiFeatures");
 // Create new Product => /api/v1/admin/products/new
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.create(req.body);
@@ -9,9 +10,10 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
     product,
   });
 });
-// get all the products => /api/v1/products
+// get all the products => /api/v1/products?keyword=egg
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  const products = await Product.find();
+  const apiFeatures = new APIFeatures(req.query).search();
+  const products = await apiFeatures.query;
   res.status(200).json({
     success: true,
     count: products.length,
