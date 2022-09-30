@@ -43,7 +43,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter product Seller"],
   },
-  stocks: {
+  stock: {
     type: Number,
     required: [true, "please enter product stock"],
     dafault: 0,
