@@ -12,7 +12,8 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 });
 // get all the products => /api/v1/products?keyword=egg
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  const apiFeatures = new APIFeatures(req.query).search();
+  const apiFeatures = new APIFeatures(Product, req.query).search().filter();
+
   const products = await apiFeatures.query;
   res.status(200).json({
     success: true,
