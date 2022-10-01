@@ -13,7 +13,6 @@ module.exports = class APIFeatures {
         }
       : {};
     this.query = this.query.find(keyword);
-
     return this;
   }
   filter() {
@@ -23,14 +22,20 @@ module.exports = class APIFeatures {
     const removeFields = ["keyword", "limit", "page"];
     removeFields.forEach((el) => delete queryCopy[el]);
 
-    console.log(queryCopy);
-
     // Advance filter for price ratings
     let queryStr = JSON.stringify(queryCopy);
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
-    console.log(queryStr);
 
     this.query = this.query.find(JSON.parse(queryStr));
+    console.log(this.queryStr);
+    return this;
+  }
+  pagination(resPerPage) {
+    const currentPage = Number(this.queryStr.page) || 1;
+    const skip = resPerPage * (currentPage - 1);
+    this.query = this.query.limit(resPerPage).skip(skip);
+    console.log(this.queryStr);
+
     return this;
   }
 };
