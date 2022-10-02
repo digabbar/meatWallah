@@ -23,6 +23,19 @@ module.exports = (err, req, res, next) => {
       const message = Object.values(err.errors).map((value) => value.message);
       error = new ErrorHandler(message, 400);
     }
+    if (err.code === 11000) {
+      const message = `Dublicate ${Object.keys(err.keyValue)} entered`;
+      error = new ErrorHandler(message, 400);
+    }
+    // handling wrong jwt error
+    if (err.name === "jsonWebTokenError") {
+      const message = `JSON web token is invalid try again`;
+      error = new ErrorHandler(message, 400);
+    }
+    if (err.name === "jsonWebExpireError") {
+      const message = `JSON web token is Expire try again`;
+      error = new ErrorHandler(message, 400);
+    }
     res.status(err.statusCode).json({
       success: false,
       message: error.message || "Internal Serval Error",
