@@ -6,6 +6,7 @@ const errorMiddleware = require("./middlewares/error");
 
 app.use(express.json());
 app.use(cookieParser());
+
 // Import all Routes
 const products = require("./routes/product");
 const auth = require("./routes/auth");
