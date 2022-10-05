@@ -11,10 +11,10 @@ const orderSchema = mongoose.Schema({
     },
 
     latitude: {
-      type: String,
+      type: Number,
     },
     longitude: {
-      type: String,
+      type: Number,
     },
     city: {
       type: String,
@@ -40,23 +40,11 @@ const orderSchema = mongoose.Schema({
   },
   orderItems: [
     {
-      name: {
-        type: String,
-        required: true,
-      },
       quantity: {
         type: Number,
         required: true,
       },
-      image: {
-        type: String,
-        required: true,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      products: {
+      product: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Product",

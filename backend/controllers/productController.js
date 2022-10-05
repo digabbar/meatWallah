@@ -71,3 +71,44 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
     deletedProduct,
   });
 });
+
+// create new review => /api/v1/products/:id/review/new
+exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
+  const { rating, comment } = req.body;
+
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+  const product = await Product.findById(req.params.id);
+  const isUserBuyProduct = product.purchasedUser.find(
+    (r) => r.user.toString() === req.user._id.toString()
+  );
+  if (!isUserBuyProduct) {
+    return next(new ErrorHandler("user have not buy this product", 400));
+  }
+  const isReviewed = product.reviews.find(
+    (r) => r.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    product.reviews.forEach((review) => {
+      if (review.user.toString() === req.user._id.toString()) {
+        review.comment = comment;
+        review.rating = rating;
+      }
+    });
+  } else {
+    product.reviews.push(review);
+    product.numOfReviews = product.reviews.length;
+  }
+  product.ratings =
+    product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    product.reviews.length;
+  await product.save({ validateBeforeSave: false });
+  res.status(200).json({
+    success: true,
+  });
+});
