@@ -14,12 +14,12 @@ const {
   authorizeRoles,
 } = require("../middlewares/auth");
 
-router.route("/products").get(isAuthenticatatedUser, getProducts);
+router.route("/products").get(getProducts);
 router.route("/products/:id").get(getSingleProduct);
 
 router
   .route("/admin/products/new")
-  .post(isAuthenticatatedUser, authorizeRoles("user"), newProduct);
+  .post(isAuthenticatatedUser, authorizeRoles("admin"), newProduct);
 
 router
   .route("/admin/products/:id")
