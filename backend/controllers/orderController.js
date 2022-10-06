@@ -120,7 +120,6 @@ async function updateStock(id, quantity, userID) {
   const alreadyAddedUser = product.purchasedUser.find(
     (idx) => idx.user.toString() === userID.toString()
   );
-  console.log(alreadyAddedUser);
   if (!alreadyAddedUser) {
     product.purchasedUser.push({ user: userID });
   }
