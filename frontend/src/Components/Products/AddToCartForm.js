@@ -4,7 +4,9 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../Slice/CartSlice";
+import { useAlert } from "react-alert";
 function AddToCartForm(props) {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const quantityInfoRef = useRef();
   const addToCartSubmitHandler = (event) => {
@@ -14,10 +16,10 @@ function AddToCartForm(props) {
         id: props.product._id,
         title: props.product.name,
         price: props.product.price,
-        quantity: quantityInfoRef.current.value,
+        quantity: parseInt(quantityInfoRef.current.value),
       })
     );
-    console.log("submitted check redux ");
+    alert.success("Item is added to your cart");
   };
   return (
     <Form onSubmit={addToCartSubmitHandler}>

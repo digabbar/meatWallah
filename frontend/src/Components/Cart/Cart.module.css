@@ -14,3 +14,22 @@
   padding: 0;
   margin: 0;
 }
+
+.cartPriceContainer {
+  text-align: right;
+}
+.closeButtonContainer {
+  text-align: right;
+}
+.cartOrderButton {
+  text-align: right;
+}
+.cartOrderButton Button {
+  color: White;
+  font-size: 1.5rem;
+  font-weight: 900;
+  font-style: italic;
+}
+.cartOrderButton Button:hover {
+  border: 2px solid black;
+}
