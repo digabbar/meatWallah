@@ -1,0 +1,8 @@
+.searchContainer {
+  margin-bottom: 30px;
+}
+.searchContainer Form {
+  width: 50%;
+  display: flex;
+  margin: auto;
+}

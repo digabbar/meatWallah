@@ -14,7 +14,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 });
 // get all the products => /api/v1/products?keyword=egg
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  const resPerPage = 2;
+  const resPerPage = 6;
   const productCount = await Product.countDocuments();
   const apiFeatures = new APIFeatures(Product, req.query)
     .search()
@@ -22,11 +22,13 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     .pagination(resPerPage);
 
   const products = await apiFeatures.query;
-  res.status(200).json({
-    success: true,
-    count: products.length,
-    ...products,
-  });
+  setTimeout(() => {
+    res.status(200).json({
+      success: true,
+      count: products.length,
+      products,
+    });
+  }, 1000);
 });
 // get single products=> /api/v1/products/:id
 
