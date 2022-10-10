@@ -3,7 +3,8 @@ import React, { Fragment } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PageChange from "../Products/PageChange";
 import Heading from "../UI/Heading";
@@ -11,6 +12,7 @@ import SearchProduct from "../Products/SearchProduct";
 import AddToCartForm from "./AddToCartForm";
 function AllProducts() {
   const products = useSelector((state) => state.product.products);
+  console.log(products);
 
   return (
     <Fragment>
@@ -39,6 +41,9 @@ function AllProducts() {
                   <h1>&#8377; {product.price}</h1>
                   <p></p>
                   <AddToCartForm product={product} />
+                  <Button variant="link" size="lg" type="button">
+                    <Link to={`/products/${product._id}`}>View Details</Link>
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>

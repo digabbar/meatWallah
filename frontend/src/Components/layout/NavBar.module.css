@@ -4,3 +4,10 @@
 .navBar {
   margin-bottom: 20px;
 }
+.link {
+  color: inherit;
+  text-decoration: inherit;
+}
+.link:hover {
+  color: inherit;
+}

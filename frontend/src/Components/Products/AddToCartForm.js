@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../Slice/CartSlice";
 import { useAlert } from "react-alert";
@@ -37,10 +36,6 @@ function AddToCartForm(props) {
       </Form.Group>
       <Button variant="dark" size="lg" type="submit">
         Add to Cart
-      </Button>
-
-      <Button variant="link" size="lg" type="button">
-        <Link to={`/products/${props.product._id}`}>View Details</Link>
       </Button>
     </Form>
   );
