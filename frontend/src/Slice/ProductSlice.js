@@ -7,6 +7,7 @@ export const ProductSlice = createSlice({
     loading: false,
     error: null,
     productsCount: 0,
+    resPerPage: 0,
   },
   reducers: {
     all_Products_req: (state, action) => {
@@ -17,6 +18,7 @@ export const ProductSlice = createSlice({
       state.loading = false;
       state.products = action.payload.products;
       state.productsCount = action.payload.count;
+      state.resPerPage = action.payload.resPerPage;
     },
     all_Products_fail: (state, action) => {
       state.loading = false;
@@ -28,17 +30,22 @@ export const ProductSlice = createSlice({
   },
 });
 
-export const getProduct = () => async (dispatch) => {
-  try {
-    dispatch(all_Products_req());
-    const { data } = await axios.get("/api/v1/products");
-    console.log(data);
-    dispatch(all_Products_success(data));
-  } catch (error) {
-    console.log(error);
-    dispatch(all_Products_fail(error.message));
-  }
-};
+export const getProduct =
+  (currentPage = 1, keyword = "") =>
+  async (dispatch) => {
+    try {
+      dispatch(all_Products_req());
+
+      const { data } = await axios.get(
+        `/api/v1/products/?keyword=${keyword}&page=${currentPage}`
+      );
+      console.log(data);
+      dispatch(all_Products_success(data));
+    } catch (error) {
+      console.log(error);
+      dispatch(all_Products_fail(error.message));
+    }
+  };
 export const clearError = () => async (dispatch) => {
   dispatch(clear());
 };

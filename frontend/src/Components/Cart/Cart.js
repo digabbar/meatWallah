@@ -23,9 +23,12 @@ const Cart = (props) => {
     <Modal>
       <Card className={classes.cart}>
         <div className={classes.closeButtonContainer}>
-          <Button variant="danger" size="lg" onClick={toggleCartHandler}>
-            <CloseButton variant="white" />
-          </Button>
+          <Button
+            as={CloseButton}
+            variant="danger"
+            size="lg"
+            onClick={toggleCartHandler}
+          ></Button>
         </div>
         {cartData.items.length > 0 && <h2>Your Shopping Cart</h2>}
         {cartData.items.length === 0 && <h3>Cart is Empty</h3>}
@@ -33,6 +36,7 @@ const Cart = (props) => {
           {cartData.items.map((eachItem) => {
             return (
               <CartItem
+                key={eachItem.id}
                 item={{
                   id: eachItem.id,
                   title: eachItem.name,

@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 function MetaData(props) {
   return (
     <Helmet>
-      <title>{`${props.title}}-meatWallah`}</title>
+      <title>{`${props.title}-meatWallah`}</title>
     </Helmet>
   );
 }

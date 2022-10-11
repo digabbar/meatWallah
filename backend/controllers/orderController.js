@@ -123,6 +123,7 @@ async function updateStock(id, quantity, userID) {
   if (!alreadyAddedUser) {
     product.purchasedUser.push({ user: userID });
   }
+
   await product.save();
 }
 

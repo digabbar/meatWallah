@@ -6,17 +6,13 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import PageChange from "../Products/PageChange";
 import Heading from "../UI/Heading";
-import SearchProduct from "../Products/SearchProduct";
 import AddToCartForm from "./AddToCartForm";
 function AllProducts() {
   const products = useSelector((state) => state.product.products);
-  console.log(products);
 
   return (
     <Fragment>
-      <SearchProduct />
       <Heading name="Latest Products" />
       <Row xs={1} md={2} lg={3} className="g-4">
         {products &&
@@ -49,7 +45,6 @@ function AllProducts() {
             </Col>
           ))}
       </Row>
-      <PageChange />
     </Fragment>
   );
 }

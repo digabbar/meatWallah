@@ -18,6 +18,7 @@ function App() {
         <main className={classes.main}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/search/:keyword" element={<Home />} />
             <Route path="/products/:id" element={<ShowProduct />} />
           </Routes>
         </main>

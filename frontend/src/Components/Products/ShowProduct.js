@@ -6,7 +6,7 @@ import Loader from "../UI/Loader";
 import { Fragment, useEffect } from "react";
 import DisplayProduct from "./ShowProductComp./DisplayProduct";
 import ReviewContainer from "./ShowProductComp./ReviewContainer";
-
+import MetaData from "../layout/MetaData";
 function ShowProduct() {
   const params = useParams();
   const dispatch = useDispatch();
@@ -21,10 +21,13 @@ function ShowProduct() {
     <Fragment>
       {loading && <Loader />}
       {!loading && !error && (
-        <Row xs={1} md={2} className="g-3">
-          <DisplayProduct />
-          <ReviewContainer />
-        </Row>
+        <Fragment>
+          <MetaData title={products.name} />
+          <Row xs={1} md={2} className="g-3">
+            <DisplayProduct />
+            <ReviewContainer />
+          </Row>
+        </Fragment>
       )}
     </Fragment>
   );
