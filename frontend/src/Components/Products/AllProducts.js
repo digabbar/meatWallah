@@ -6,14 +6,12 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Heading from "../UI/Heading";
 import AddToCartForm from "./AddToCartForm";
 function AllProducts() {
   const products = useSelector((state) => state.product.products);
 
   return (
     <Fragment>
-      <Heading name="Latest Products" />
       <Row xs={1} md={2} lg={3} className="g-4">
         {products &&
           products.map((product) => (

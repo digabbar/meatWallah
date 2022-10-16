@@ -1,4 +1,5 @@
 import React from "react";
+import { HelmetProvider } from "react-helmet-async";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
@@ -19,11 +20,15 @@ const options = {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <AlertProvider template={AlertTemplate} {...options}>
-        <App />
-      </AlertProvider>
-    </Provider>
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+      <HelmetProvider>
+        <Provider store={store}>
+          <AlertProvider template={AlertTemplate} {...options}>
+            <App />
+          </AlertProvider>
+        </Provider>
+      </HelmetProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 );

@@ -9,6 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "../../Slice/uiSlice";
 function NavBar() {
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  console.log(isAuthenticated);
   const dispatch = useDispatch();
   const toggleCartHandler = () => {
     dispatch(toggleCart());
@@ -34,7 +37,10 @@ function NavBar() {
               Products
             </Nav.Link>
 
-            <NavDropdown title="User" id="collasible-nav-dropdown">
+            <NavDropdown
+              title={user ? user.name : "User"}
+              id="collasible-nav-dropdown"
+            >
               <NavDropdown.Item href="#action/3.1">profile</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">myorder</NavDropdown.Item>
             </NavDropdown>
@@ -50,13 +56,17 @@ function NavBar() {
             <Nav.Link onClick={toggleCartHandler}>
               Cart <span>({totalQuantity})</span>
             </Nav.Link>
-            <Nav.Link href="#deets">Login</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Register
-            </Nav.Link>
-            <Nav.Link eventKey={3} href="#memes">
-              Logout
-            </Nav.Link>
+            {!isAuthenticated && (
+              <Nav.Link eventKey={1} as={Link} to="/login">
+                Login
+              </Nav.Link>
+            )}
+
+            {isAuthenticated && (
+              <Nav.Link eventKey={3} href="#memes">
+                Logout
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

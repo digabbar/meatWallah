@@ -8,6 +8,7 @@ export const ProductSlice = createSlice({
     error: null,
     productsCount: 0,
     resPerPage: 0,
+    filteredProductsCount: 0,
   },
   reducers: {
     all_Products_req: (state, action) => {
@@ -19,6 +20,7 @@ export const ProductSlice = createSlice({
       state.products = action.payload.products;
       state.productsCount = action.payload.count;
       state.resPerPage = action.payload.resPerPage;
+      state.filteredProductsCount = action.payload.filteredProductsCount;
     },
     all_Products_fail: (state, action) => {
       state.loading = false;
