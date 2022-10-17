@@ -11,6 +11,7 @@ import SearchProduct from "./Components/Products/SearchProduct";
 import Login from "./Components/user/login/Login";
 import Register from "./Components/user/register/Register";
 import { loadUser } from "./Slice/userSlice";
+import Profile from "./Components/user/profile/Profile";
 
 function App() {
   const showCart = useSelector((state) => state.ui.showCart);
@@ -33,6 +34,7 @@ function App() {
             <Route path="/products/:id" element={<ShowProduct />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
         <Footer />

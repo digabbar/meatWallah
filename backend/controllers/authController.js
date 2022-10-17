@@ -37,6 +37,61 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   }
   sendToken(user, 200, res);
 });
+// verify email => /api/v1/email/verify
+exports.verifyEmail = catchAsyncErrors(async (req, res, next) => {
+  const id = req.user._id;
+  const user = await User.findById(id);
+  const resetToken = user.getVerifyEmailToken();
+  await user.save({ validateBeforeSave: false });
+  const resetUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/email/verify/${resetToken}`;
+  const message = `Your email verify token is as follow :\n\n${resetUrl}\n\nIf you not requested this email than ignore it`;
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: "meatWallah verify Email",
+      message,
+    });
+    res.status(200).json({
+      success: true,
+      message: `Email send to ${user.email}`,
+    });
+  } catch (error) {
+    user.verifyEmailToken = undefined;
+    user.verifyEmailExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
+// verify email => /api/v1/email/verify:token
+
+exports.verifyEmailToken = catchAsyncErrors(async (req, res, next) => {
+  // hash url token
+  const verifyEmailToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    verifyEmailToken,
+    verifyEmailExpire: { $gt: Date.now() },
+  });
+  if (!user) {
+    return next(
+      new ErrorHandler("Verify email token is invalid or has been expired", 400)
+    );
+  }
+
+  user.isVerified = true;
+  user.verifyEmailExpire = undefined;
+  user.verifyEmailToken = undefined;
+  await user.save();
+  res.status(200).json({
+    success: true,
+  });
+});
+
 // forget password => /api/v1/password/forget
 exports.forgetPassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
@@ -63,7 +118,7 @@ exports.forgetPassword = catchAsyncErrors(async (req, res, next) => {
     });
   } catch (error) {
     user.resetPasswordToken = undefined;
-    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
     await user.save({ validateBeforeSave: false });
     return next(new ErrorHandler(error.message, 500));
   }

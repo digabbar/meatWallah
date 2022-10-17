@@ -14,6 +14,8 @@ const {
   getUserDetails,
   updateUserProfile,
   deleteUserProfile,
+  verifyEmail,
+  verifyEmailToken,
 } = require("../controllers/authController");
 const {
   isAuthenticatatedUser,
@@ -35,5 +37,9 @@ router
   .get(isAuthenticatatedUser, authorizeRoles("admin"), getUserDetails)
   .put(isAuthenticatatedUser, authorizeRoles("admin"), updateUserProfile)
   .delete(isAuthenticatatedUser, authorizeRoles("admin"), deleteUserProfile);
+router.route("/email/verify").get(isAuthenticatatedUser, verifyEmail);
+router
+  .route("/email/verify/:token")
+  .get(isAuthenticatatedUser, verifyEmailToken);
 router.route("/logout").get(logoutUser);
 module.exports = router;

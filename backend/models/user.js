@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: [validator.isEmail, "Please enter valid email address"],
   },
+  isVerified: { type: Boolean, default: false },
   password: {
     type: String,
     required: [true, "Please enter password"],
@@ -31,6 +32,8 @@ const userSchema = new mongoose.Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  verifyEmailToken: String,
+  verifyEmailExpire: Date,
 });
 // Encrypting password before saving user
 userSchema.pre("save", async function (next) {
@@ -60,6 +63,19 @@ userSchema.methods.getResetPasswordToken = function () {
     .digest("hex");
   // set token expiry time
   this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+
+  return resetToken;
+};
+// generate verify email token
+userSchema.methods.getVerifyEmailToken = function () {
+  // generate token
+  const resetToken = crypto.randomBytes(20).toString("hex");
+  this.verifyEmailToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  // set token expiry time
+  this.verifyEmailExpire = Date.now() + 30 * 60 * 1000;
 
   return resetToken;
 };
