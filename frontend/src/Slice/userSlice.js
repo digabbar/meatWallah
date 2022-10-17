@@ -57,6 +57,14 @@ export const userSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
     },
+    logout_success: (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+    },
+    logout_fail: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 //load user
@@ -108,6 +116,14 @@ export const login = (email, password) => async (dispatch) => {
     dispatch(login_fail(error.response.data.message));
   }
 };
+export const logout = () => async (dispatch) => {
+  try {
+    await axios.get("/api/v1/logout");
+    dispatch(logout_success());
+  } catch (error) {
+    dispatch(logout_fail(error.response.data.message));
+  }
+};
 
 export const clearError = () => async (dispatch) => {
   dispatch(clear());
@@ -124,5 +140,7 @@ export const {
   loadUser_req,
   loadUser_fail,
   loadUser_success,
+  logout_success,
+  logout_fail,
 } = userSlice.actions;
 export default userSlice.reducer;

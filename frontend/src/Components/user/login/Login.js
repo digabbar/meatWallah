@@ -17,6 +17,7 @@ const Login = () => {
     console.log(email);
     console.log(password);
     dispatch(login(email.trim(), password.trim()));
+    alert.success("Login Successfully");
   };
   useEffect(() => {
     if (isAuthenticated) {

@@ -7,7 +7,10 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "../../Slice/uiSlice";
+import { logout } from "../../Slice/userSlice";
+import { useAlert } from "react-alert";
 function NavBar() {
+  const alert = useAlert();
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
@@ -15,6 +18,11 @@ function NavBar() {
   const dispatch = useDispatch();
   const toggleCartHandler = () => {
     dispatch(toggleCart());
+  };
+  const logoutHandler = () => {
+    console.log("logout ");
+    dispatch(logout());
+    alert.success("logout Successfully");
   };
   return (
     <Navbar
@@ -63,7 +71,7 @@ function NavBar() {
             )}
 
             {isAuthenticated && (
-              <Nav.Link eventKey={3} href="#memes">
+              <Nav.Link eventKey={1} as={Link} onClick={logoutHandler}>
                 Logout
               </Nav.Link>
             )}
