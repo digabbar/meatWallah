@@ -102,9 +102,7 @@ exports.forgetPassword = catchAsyncErrors(async (req, res, next) => {
   const resetToken = user.getResetPasswordToken();
   await user.save({ validateBeforeSave: false });
   // create reset password url
-  const resetUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/password/reset/${resetToken}`;
+  const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
   const message = `Your password reset token is s follow :\n\n${resetUrl}\n\nIf you not requested this email than ignore it`;
   try {
     await sendEmail({
@@ -179,6 +177,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
+    isVerified: false,
   };
   const user = await User.findByIdAndUpdate(req.user._id, newUserData, {
     new: true,
