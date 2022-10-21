@@ -15,6 +15,7 @@ import ProtectedRoute from "./Components/route/ProtectedRoute";
 import UpdatePassword from "./Components/profile/UpdatePassword";
 import ForgetPassword from "./Components/authComp./ForgetPassword";
 import ResetPassword from "./Components/authComp./ResetPassword";
+import Cart from "./Components/cart/Cart";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/search/:keyword" element={<Home />} />
             <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/password/forget" element={<ForgetPassword />} />

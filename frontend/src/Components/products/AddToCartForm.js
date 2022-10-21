@@ -1,26 +1,57 @@
 import React, { useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import classes from "./AddToCartForm.module.css";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../slice/cartSlice";
 function AddToCartForm(props) {
-  const quantityInfoRef = useRef();
+  const dispatch = useDispatch();
+  const qtyInputRef = useRef();
   const addToCartSubmitHandler = (event) => {
     event.preventDefault();
+    dispatch(
+      addToCart({
+        id: props.product._id,
+        title: props.product.name,
+        image: props.product.images[0].url,
+        price: props.product.price,
+        quantity: parseInt(qtyInputRef.current.value),
+      })
+    );
   };
+  const increaseQty = () => {
+    let count = parseInt(qtyInputRef.current.value);
+    if (count >= props.product.stock) return;
+    count += 1;
+    qtyInputRef.current.value = count;
+  };
+
+  const decreaseQty = () => {
+    let count = parseInt(qtyInputRef.current.value);
+
+    if (count <= 1) return;
+
+    count -= 1;
+    qtyInputRef.current.value = count;
+  };
+
   return (
     <Form onSubmit={addToCartSubmitHandler}>
-      <Form.Group className="mb-3">
-        <Form.Label htmlFor={`Quantity${props.product._id}`}>
-          Quantity
-        </Form.Label>
-        <Form.Select id={`Quantity${props.product._id}`} ref={quantityInfoRef}>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </Form.Select>
-      </Form.Group>
-      <Button variant="dark" size="lg" type="submit">
+      <div className={classes.quantityContainer}>
+        <Button variant="danger" type="button" onClick={decreaseQty}>
+          -
+        </Button>
+        <input type="number" readOnly defaultValue="1" ref={qtyInputRef} />
+        <Button variant="primary" type="button" onClick={increaseQty}>
+          +
+        </Button>
+      </div>
+      <Button
+        variant="dark"
+        size="lg"
+        type="submit"
+        disabled={props.product.stock === 0 ? true : false}
+      >
         Add to Cart
       </Button>
     </Form>

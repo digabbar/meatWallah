@@ -9,6 +9,16 @@ import { logout } from "../../actions/userActions";
 function NavBar() {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
+
+  const getTotalQuantity = () => {
+    let total = 0;
+    cart.forEach((item) => {
+      total += item.quantity;
+    });
+    return total;
+  };
+
   const logoutHandler = () => {
     console.log("logout");
     dispatch(logout());
@@ -55,8 +65,8 @@ function NavBar() {
               <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
             )}
 
-            <Nav.Link eventKey={2} href="#memes">
-              Cart
+            <Nav.Link as={Link} to="/cart">
+              Cart ({getTotalQuantity()})
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

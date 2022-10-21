@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import classes from "./EachProduct.module.css";
 import AddToCartForm from "./AddToCartForm";
 function EachProduct(props) {
   return (
@@ -15,8 +16,19 @@ function EachProduct(props) {
           </p>
         </div>
         <span>{props.product.numOfReviews} reviews</span>
-
         <p></p>
+        <p></p>
+        <p className={classes.stock}>
+          Status:{" "}
+          <span
+            className={`${
+              props.product.stock > 0 ? "text-success" : "text-danger"
+            }`}
+          >
+            {props.product.stock > 0 ? "In Stock" : "Out of Stock"}
+          </span>
+        </p>
+
         <h1>&#8377; {props.product.price}</h1>
         <p></p>
         <AddToCartForm product={props.product} />

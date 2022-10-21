@@ -8,7 +8,7 @@ import AlertTemplate from "react-alert-template-basic";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
-import store from "./Components/store/store";
+import { store } from "./Components/store/store";
 import { Provider } from "react-redux";
 
 const options = {
