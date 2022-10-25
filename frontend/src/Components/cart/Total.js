@@ -19,7 +19,7 @@ function Total() {
       <h2>ORDER SUMMARY</h2>
       <div>
         <p className={classes.total__p}>
-          total ({getTotal().totalQuantity} items) :{" "}
+          ({getTotal().totalQuantity} items) :{" "}
           <strong>&#8377; {getTotal().totalPrice}</strong>
         </p>
       </div>

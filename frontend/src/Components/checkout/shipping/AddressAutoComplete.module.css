@@ -1,0 +1,14 @@
+.address {
+  margin-bottom: 20px;
+}
+.address input {
+  text-transform: none;
+}
+.suggestionItemActive {
+  background-color: "#fafafa";
+  cursor: "pointer";
+}
+.suggestionItem {
+  background-color: "#ffffff";
+  cursor: "pointer";
+}

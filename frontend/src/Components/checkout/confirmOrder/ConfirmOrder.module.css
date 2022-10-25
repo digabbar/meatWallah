@@ -1,0 +1,21 @@
+.shippingInfo {
+  font-size: 24px;
+}
+.cartInfo {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.priceInfo {
+  font-size: 24px;
+}
+.priceInfo p b {
+  float: right;
+}
+
+/*  .shippingInfo */
+.fullName {
+  text-transform: uppercase;
+}
+.cityState {
+  text-transform: capitalize;
+}

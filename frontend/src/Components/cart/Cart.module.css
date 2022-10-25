@@ -25,6 +25,9 @@
   padding: 10px;
   border-bottom: 1px solid lightgray;
 }
+.checkoutButton {
+  font-size: 24px;
+}
 
 @media (max-width: 800px) {
   .cart {

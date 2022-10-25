@@ -2,35 +2,38 @@ const mongoose = require("mongoose");
 
 const orderSchema = mongoose.Schema({
   shippingInfo: {
-    suggestions: {
-      type: "String",
+    firstName: {
+      type: String,
+      required: [true, "please enter First Name"],
+    },
+    lastName: {
+      type: String,
+      required: [true, "please enter Last Name"],
     },
     address: {
       type: String,
-      required: true,
+      required: [true, "please enter address"],
     },
 
-    latitude: {
-      type: Number,
-    },
-    longitude: {
-      type: Number,
-    },
     city: {
       type: String,
-      required: true,
+      required: [true, "please enter City Name"],
     },
     phoneNo: {
-      type: String,
-      required: true,
+      type: Number,
+      required: [true, "please enter Mobile Number"],
     },
     pincode: {
-      type: String,
-      required: true,
+      type: Number,
+      required: [true, "please enter Pincode"],
     },
     country: {
       type: String,
       default: "India",
+    },
+    state: {
+      type: String,
+      required: true,
     },
   },
   user: {
@@ -51,13 +54,14 @@ const orderSchema = mongoose.Schema({
       },
     },
   ],
-  paymentInfo: {
-    id: {
-      type: String,
-    },
-    status: {
-      type: String,
-    },
+  receiptId: {
+    type: String,
+  },
+  paymentId: {
+    type: String,
+  },
+  signature: {
+    type: String,
   },
   itemsPrice: {
     type: Number,

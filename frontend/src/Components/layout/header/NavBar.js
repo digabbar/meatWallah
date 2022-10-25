@@ -29,7 +29,6 @@ function NavBar() {
         <Navbar.Brand as={Link} to="/">
           meatWallah
         </Navbar.Brand>
-        <SearchForm />
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav" className="text-center">
           <Nav className="me-auto">
@@ -68,6 +67,7 @@ function NavBar() {
             <Nav.Link as={Link} to="/cart">
               Cart ({getTotalQuantity()})
             </Nav.Link>
+            <SearchForm />
           </Nav>
         </Navbar.Collapse>
       </Container>

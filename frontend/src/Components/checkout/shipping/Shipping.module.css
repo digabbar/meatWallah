@@ -1,0 +1,51 @@
+.shippingForm {
+  font-size: 16px;
+  font-weight: 500;
+}
+.shippingForm input {
+  text-transform: uppercase;
+}
+.country {
+  margin-bottom: 30px;
+}
+.nameContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.firstName {
+  width: 48%;
+}
+.lastName {
+  width: 48%;
+}
+.address {
+  margin-bottom: 20px;
+}
+.city {
+  width: 30%;
+}
+.state {
+  width: 30%;
+}
+.pinCode {
+  width: 30%;
+}
+.cityStatePinContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.mobileNo {
+  font-weight: 900;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

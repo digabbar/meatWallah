@@ -4,7 +4,9 @@ import Form from "react-bootstrap/Form";
 import classes from "./AddToCartForm.module.css";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../slice/cartSlice";
+import { useAlert } from "react-alert";
 function AddToCartForm(props) {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const qtyInputRef = useRef();
   const addToCartSubmitHandler = (event) => {
@@ -16,8 +18,10 @@ function AddToCartForm(props) {
         image: props.product.images[0].url,
         price: props.product.price,
         quantity: parseInt(qtyInputRef.current.value),
+        stock: props.product.stock,
       })
     );
+    alert.success("Item is added to Cart");
   };
   const increaseQty = () => {
     let count = parseInt(qtyInputRef.current.value);
