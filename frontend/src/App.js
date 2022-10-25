@@ -18,6 +18,7 @@ import ResetPassword from "./Components/authComp./ResetPassword";
 import Cart from "./Components/cart/Cart";
 import Shipping from "./Components/checkout/shipping/Shipping";
 import ConfirmOrder from "./Components/checkout/confirmOrder/ConfirmOrder";
+import OrderCreateSuccess from "./Components/checkout/OrderCreateSuccess";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -46,6 +47,14 @@ function App() {
               element={
                 <ProtectedRoute isAdmin={false}>
                   <ConfirmOrder />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/success"
+              element={
+                <ProtectedRoute isAdmin={false}>
+                  <OrderCreateSuccess />
                 </ProtectedRoute>
               }
             />

@@ -6,6 +6,7 @@ import AuthReducer from "../slice/authSlice";
 import UserReducer from "../slice/userSlice";
 import ForgetReducer from "../slice/forgetSlice";
 import CartReducer from "../slice/cartSlice";
+import NewOrderReducer from "../slice/newOrderSlice";
 
 import storage from "redux-persist/lib/storage";
 import {
@@ -33,6 +34,7 @@ export const store = configureStore({
     user: UserReducer,
     forget: ForgetReducer,
     cart: persistedReducer,
+    newOrder: NewOrderReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

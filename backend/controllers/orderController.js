@@ -9,27 +9,24 @@ const req = require("express/lib/request");
 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const {
-    orderItems,
     shippingInfo,
+    orderItems,
+    payment,
     itemsPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
-    paymentInfo,
-    latitude,
-    longitude,
   } = req.body;
 
   const order = await Order.create({
-    orderItems,
     shippingInfo,
+    orderItems,
+    payment,
     itemsPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
-    paymentInfo,
-    latitude,
-    longitude,
+
     paidAt: Date.now(),
     user: req.user._id,
   });

@@ -13,8 +13,8 @@ function AddToCartForm(props) {
     event.preventDefault();
     dispatch(
       addToCart({
-        id: props.product._id,
-        title: props.product.name,
+        product: props.product._id,
+        name: props.product.name,
         image: props.product.images[0].url,
         price: props.product.price,
         quantity: parseInt(qtyInputRef.current.value),

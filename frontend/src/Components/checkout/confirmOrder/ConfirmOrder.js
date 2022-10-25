@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
@@ -6,13 +6,38 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import classes from "./ConfirmOrder.module.css";
 import Button from "react-bootstrap/Button";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { newOrderAction } from "../../slice/newOrderSlice";
+import Loader from "../../UI/Loader";
 import CartItem from "../../cart/CartItem";
 import CheckoutSteps from "../CheckoutSteps";
+import { createOrder, clearError } from "../../actions/orderActions";
+import { useAlert } from "react-alert";
+
 const ConfirmOrder = () => {
+  const dispatch = useDispatch();
+  const alert = useAlert();
   const navigate = useNavigate();
   const { cart, shippingInfo } = useSelector((state) => state.cart);
   const user = useSelector((state) => state.auth.user);
+  const { isOrderCreated, error, loading } = useSelector(
+    (state) => state.newOrder
+  );
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearError("newOrder"));
+    }
+    if (isOrderCreated) {
+      alert.success("order created successfully");
+      navigate("/success");
+      dispatch(newOrderAction.create_order_reset());
+    }
+  }, [alert, dispatch, error, navigate, isOrderCreated]);
+  if (loading) {
+    return <Loader />;
+  }
+
   const itemsPrice = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -24,7 +49,7 @@ const ConfirmOrder = () => {
   const paymentData = {
     amount: Math.round(totalPrice * 100),
   };
-  const checkoutHandler = async (totalPrice) => {
+  const checkoutHandler = async () => {
     try {
       document.querySelector("#rzp-button1").disabled = true;
       const {
@@ -47,9 +72,21 @@ const ConfirmOrder = () => {
         handler: async (response) => {
           const verifyUrl = "http://localhost:4000/api/v1/payment/verification";
           const { data } = await axios.post(verifyUrl, response);
+          console.log(data.payment);
+          // create order
+          // removing stock
 
-          console.log(data);
-          navigate("/success");
+          dispatch(
+            createOrder({
+              shippingPrice,
+              totalPrice,
+              taxPrice,
+              itemsPrice,
+              orderItems: cart,
+              shippingInfo,
+              payment: data.payment,
+            })
+          );
         },
         modal: {
           ondismiss: function () {
@@ -71,17 +108,12 @@ const ConfirmOrder = () => {
       const razor = new window.Razorpay(options);
       razor.open();
       razor.on("payment.failed", function (response) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
+        alert.error(response.error.reason);
       });
     } catch (error) {
       document.querySelector("#rzp-button1").disabled = false;
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
+      alert.error(error.response.data.message);
     }
   };
   return (
@@ -113,9 +145,9 @@ const ConfirmOrder = () => {
               <h3 className="mb-3 text-primary">Your Cart Item</h3>
               {cart.map((item) => (
                 <CartItem
-                  key={item.id}
-                  title={item.title}
-                  id={item.id}
+                  key={item.product}
+                  name={item.name}
+                  product={item.product}
                   image={item.image}
                   price={item.price}
                   quantity={item.quantity}

@@ -33,7 +33,7 @@ const orderSchema = mongoose.Schema({
     },
     state: {
       type: String,
-      required: true,
+      required: [true, "please enter State"],
     },
   },
   user: {
@@ -43,7 +43,19 @@ const orderSchema = mongoose.Schema({
   },
   orderItems: [
     {
+      name: {
+        type: String,
+        required: true,
+      },
       quantity: {
+        type: Number,
+        required: true,
+      },
+      image: {
+        type: String,
+        required: true,
+      },
+      price: {
         type: Number,
         required: true,
       },
@@ -54,14 +66,19 @@ const orderSchema = mongoose.Schema({
       },
     },
   ],
-  receiptId: {
-    type: String,
-  },
-  paymentId: {
-    type: String,
-  },
-  signature: {
-    type: String,
+  payment: {
+    payment_id: {
+      type: String,
+      required: true,
+    },
+    razorpay_orderId: {
+      type: String,
+      required: true,
+    },
+    paymentStatus: {
+      type: String,
+      required: true,
+    },
   },
   itemsPrice: {
     type: Number,

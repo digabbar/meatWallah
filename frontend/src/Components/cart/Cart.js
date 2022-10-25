@@ -17,10 +17,10 @@ function Cart() {
             <h3>Shopping Cart</h3>
             {cart?.map((item) => (
               <CartItem
-                key={item.id}
-                id={item.id}
+                key={item.product}
+                id={item.product}
                 image={item.image}
-                title={item.title}
+                title={item.name}
                 price={item.price}
                 quantity={item.quantity}
               />

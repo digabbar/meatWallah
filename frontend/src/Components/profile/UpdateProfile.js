@@ -33,7 +33,6 @@ const UpdateProfile = () => {
       dispatch(loadUser());
 
       navigate("/me");
-
       dispatch(userAction.update_profile_reset());
     }
   }, [dispatch, alert, error, navigate, isUpdated, user]);
