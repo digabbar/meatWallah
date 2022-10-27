@@ -16,10 +16,8 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       config
     );
-    console.log(data);
     dispatch(authAction.login_success(data.user));
   } catch (error) {
-    console.log(error);
     dispatch(authAction.login_fail(error.response.data.message));
   }
 };
@@ -36,7 +34,6 @@ export const register = (userData) => async (dispatch) => {
     const { data } = await axios.post("/api/v1/register", userData, config);
     dispatch(authAction.register_user_success(data.user));
   } catch (error) {
-    console.log(error);
     dispatch(authAction.register_user_fail(error.response.data.message));
   }
 };
@@ -47,7 +44,6 @@ export const loadUser = () => async (dispatch) => {
     const { data } = await axios.get("/api/v1/me");
     dispatch(authAction.load_user_success(data.user));
   } catch (error) {
-    console.log(error);
     dispatch(authAction.load_user_fail(error.response.data.message));
   }
 };
@@ -57,7 +53,6 @@ export const logout = () => async (dispatch) => {
     await axios.get("/api/v1/logout");
     dispatch(authAction.logout_success());
   } catch (error) {
-    console.log(error);
     dispatch(authAction.logout_fail(error.response.data.message));
   }
 };
@@ -75,7 +70,6 @@ export const updateProfile = (userData) => async (dispatch) => {
     const { data } = await axios.put("/api/v1/me/update", userData, config);
     dispatch(userAction.update_profile_success(data.success));
   } catch (error) {
-    console.log(error);
     dispatch(userAction.update_profile_fail(error.response.data.message));
   }
 };
@@ -95,7 +89,6 @@ export const updatePassword = (userData) => async (dispatch) => {
     );
     dispatch(userAction.update_password_success(data.success));
   } catch (error) {
-    console.log(error);
     dispatch(userAction.update_password_fail(error.response.data.message));
   }
 };
@@ -115,7 +108,6 @@ export const forgetPassword = (userData) => async (dispatch) => {
     );
     dispatch(forgetAction.forget_password_success(data));
   } catch (error) {
-    console.log(error);
     dispatch(forgetAction.forget_password_fail(error.response.data.message));
   }
 };
@@ -136,7 +128,6 @@ export const resetPassword = (token, userData) => async (dispatch) => {
     );
     dispatch(forgetAction.new_password_success(data));
   } catch (error) {
-    console.log(error);
     dispatch(forgetAction.new_password_fail(error.response.data.message));
   }
 };

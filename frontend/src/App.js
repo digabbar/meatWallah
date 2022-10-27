@@ -19,6 +19,8 @@ import Cart from "./Components/cart/Cart";
 import Shipping from "./Components/checkout/shipping/Shipping";
 import ConfirmOrder from "./Components/checkout/confirmOrder/ConfirmOrder";
 import OrderCreateSuccess from "./Components/checkout/OrderCreateSuccess";
+import ListOrders from "./Components/order/ListOrders";
+import OrderDetails from "./Components/order/OrderDetails";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -55,6 +57,23 @@ function App() {
               element={
                 <ProtectedRoute isAdmin={false}>
                   <OrderCreateSuccess />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/orders/me"
+              element={
+                <ProtectedRoute isAdmin={false}>
+                  <ListOrders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/orders/:id"
+              element={
+                <ProtectedRoute isAdmin={false}>
+                  <OrderDetails />
                 </ProtectedRoute>
               }
             />

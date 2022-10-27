@@ -199,9 +199,11 @@ const Shipping = () => {
             value={mobile}
           />
         </FloatingLabel>
-        <Button variant="success" type="submit" size="lg" className="mt-5">
-          Confirm Order
-        </Button>
+        <div className="text-end">
+          <Button variant="success" type="submit" className="mt-5">
+            Confirm Order
+          </Button>
+        </div>
       </Form>
     </Fragment>
   );

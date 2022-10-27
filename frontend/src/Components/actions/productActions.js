@@ -11,10 +11,8 @@ export const getProduct =
       const { data } = await axios.get(
         `/api/v1/products/?keyword=${keyword}&page=${currentPage}`
       );
-      console.log(data);
       dispatch(productAction.all_Products_success(data));
     } catch (error) {
-      console.log(error);
       dispatch(productAction.all_Products_fail(error.message));
     }
   };
@@ -23,10 +21,8 @@ export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch(productDetailAction.product_details_req());
     const { data } = await axios.get(`/api/v1/products/${id}`);
-    console.log(data);
     dispatch(productDetailAction.product_details_success(data));
   } catch (error) {
-    console.log(error);
     dispatch(productDetailAction.product_details_fail(error.message));
   }
 };

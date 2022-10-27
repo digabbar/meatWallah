@@ -45,12 +45,11 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 });
 // get single order => /api/v1/orders/:id
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
-  const order = await Order.findById(req.params.id)
-    .populate("user", "name email")
-    .populate({
-      path: "orderItems.product",
-      select: "name price",
-    });
+  const order = await Order.findById(req.params.id).populate(
+    "user",
+    "name email"
+  );
+
   if (!order) {
     return next(new ErrorHandler("No order found with this id", 404));
   }
@@ -62,9 +61,8 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
 
 // get single order => /api/v1/orders/me
 exports.myOrders = catchAsyncErrors(async (req, res, next) => {
-  const order = await Order.find({ user: req.user._id }).populate({
-    path: "orderItems.product",
-    select: "name price",
+  const order = await Order.find({ user: req.user._id }).sort({
+    createdAt: "desc",
   });
 
   res.status(200).json({

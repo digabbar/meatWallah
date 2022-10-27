@@ -13,8 +13,8 @@ import CartItem from "../../cart/CartItem";
 import CheckoutSteps from "../CheckoutSteps";
 import { createOrder, clearError } from "../../actions/orderActions";
 import { useAlert } from "react-alert";
-
-const ConfirmOrder = () => {
+import scriptLoader from "react-async-script-loader";
+const ConfirmOrder = (props) => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
@@ -54,10 +54,10 @@ const ConfirmOrder = () => {
       document.querySelector("#rzp-button1").disabled = true;
       const {
         data: { key },
-      } = await axios.get("api/v1/getkey");
+      } = await axios.get("/api/v1/getkey");
       const {
         data: { order },
-      } = await axios.post("api/v1/payment/checkout", paymentData);
+      } = await axios.post("/api/v1/payment/checkout", paymentData);
 
       const options = {
         key, // Enter the Key ID generated from the Dashboard
@@ -70,9 +70,8 @@ const ConfirmOrder = () => {
         order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         // callback_url: "http://localhost:4000/api/v1/payment/verification",
         handler: async (response) => {
-          const verifyUrl = "http://localhost:4000/api/v1/payment/verification";
+          const verifyUrl = "/api/v1/payment/verification";
           const { data } = await axios.post(verifyUrl, response);
-          console.log(data.payment);
           // create order
           // removing stock
 
@@ -112,7 +111,6 @@ const ConfirmOrder = () => {
       });
     } catch (error) {
       document.querySelector("#rzp-button1").disabled = false;
-      // console.log(error.response.data.message);
       alert.error(error.response.data.message);
     }
   };
@@ -171,16 +169,17 @@ const ConfirmOrder = () => {
                 <strong>Total </strong>
                 <b>{totalPrice}</b>
               </p>
-              <div className="text-end mt-5">
-                <Button
-                  variant="success"
-                  size="lg"
-                  id="rzp-button1"
-                  onClick={checkoutHandler}
-                >
-                  Pay - {totalPrice}
-                </Button>
-              </div>
+              {props.isScriptLoadSucceed && props.isScriptLoaded && (
+                <div className="text-end mt-5">
+                  <Button
+                    variant="success"
+                    id="rzp-button1"
+                    onClick={checkoutHandler}
+                  >
+                    Pay - {totalPrice}
+                  </Button>
+                </div>
+              )}
             </div>
           </Col>
         </Row>
@@ -189,4 +188,6 @@ const ConfirmOrder = () => {
   );
 };
 
-export default ConfirmOrder;
+export default scriptLoader([`https://checkout.razorpay.com/v1/checkout.js`])(
+  ConfirmOrder
+);

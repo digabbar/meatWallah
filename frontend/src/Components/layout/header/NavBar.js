@@ -20,7 +20,6 @@ function NavBar() {
   };
 
   const logoutHandler = () => {
-    console.log("logout");
     dispatch(logout());
   };
   return (
@@ -50,7 +49,9 @@ function NavBar() {
               <NavDropdown.Item as={Link} to="/me">
                 Profile
               </NavDropdown.Item>
-              <NavDropdown.Item>MY Order</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/orders/me">
+                MY Orders
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
 

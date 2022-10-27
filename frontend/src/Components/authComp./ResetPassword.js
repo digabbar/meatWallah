@@ -12,8 +12,6 @@ const ResetPassword = () => {
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
 
-  console.log(params);
-
   const alert = useAlert();
   const dispatch = useDispatch();
   const { error, success } = useSelector((state) => state.forget);

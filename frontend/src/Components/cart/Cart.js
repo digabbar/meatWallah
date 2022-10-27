@@ -33,7 +33,12 @@ function Cart() {
         </div>
       </div>
       <div className="text-end" size="lg" varient="primary">
-        <Button className={classes.checkoutButton} as={Link} to="/shipping">
+        <Button
+          className={classes.checkoutButton}
+          as={Link}
+          variant="success"
+          to="/shipping"
+        >
           Checkout
         </Button>
       </div>
