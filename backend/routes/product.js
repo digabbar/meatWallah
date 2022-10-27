@@ -31,7 +31,7 @@ router
 
 router
   .route("/products/:id/review/new")
-  .post(isAuthenticatatedUser, createProductReview);
+  .put(isAuthenticatatedUser, createProductReview);
 
 router
   .route("/products/:id/review")

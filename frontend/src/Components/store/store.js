@@ -9,6 +9,7 @@ import CartReducer from "../slice/cartSlice";
 import NewOrderReducer from "../slice/newOrderSlice";
 import MyOrderReducer from "../slice/myOrderSlice";
 import OrderDetailReducer from "../slice/orderDetailSlice";
+import ReviewReducer from "../slice/newReviewSlice";
 
 import storage from "redux-persist/lib/storage";
 import {
@@ -39,6 +40,7 @@ export const store = configureStore({
     newOrder: NewOrderReducer,
     myOrder: MyOrderReducer,
     orderDetail: OrderDetailReducer,
+    review: ReviewReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

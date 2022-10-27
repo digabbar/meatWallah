@@ -1,94 +1,65 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { useSelector, useDispatch } from "react-redux";
+import Alert from "react-bootstrap/Alert";
+import { newReview } from "../../actions/productActions";
 
 const ReviewContainer = (props) => {
+  const ratingInputRef = useRef();
+  const reviewInputRef = useRef();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   if (!Object.keys(props.product).length) {
     return;
   }
+  const submitHandler = (event) => {
+    event.preventDefault();
+    console.log(ratingInputRef.current.value);
+    console.log(reviewInputRef.current.value);
+    dispatch(
+      newReview(props.product._id, {
+        rating: +ratingInputRef.current.value.trim(),
+        comment: reviewInputRef.current.value.trim(),
+      })
+    );
+  };
   return (
     <Fragment>
       <Col>
         <div className="ReviewContainer">
-          <h1>Leave a Review</h1>
-          <p></p>
-          <p></p>
-          <Form className="mb-5">
-            <fieldset className="starability-heart">
-              <input
-                type="radio"
-                id="no-rate"
-                className="input-no-rate"
-                name="review[rating]"
-                value="1"
-                checked
-                aria-label="No rating."
-              />
-              <input
-                type="radio"
-                id="first-rate1"
-                name="review[rating]"
-                value="1"
-              />
-              <label htmlFor="first-rate1" title="Terrible">
-                1 star
-              </label>
-              <input
-                type="radio"
-                id="first-rate2"
-                name="review[rating]"
-                value="2"
-              />
-              <label htmlFor="first-rate2" title="Not good">
-                2 stars
-              </label>
-              <input
-                type="radio"
-                id="first-rate3"
-                name="review[rating]"
-                value="3"
-              />
-              <label htmlFor="first-rate3" title="Average">
-                3 stars
-              </label>
-              <input
-                type="radio"
-                id="first-rate4"
-                name="review[rating]"
-                value="4"
-              />
-              <label htmlFor="first-rate4" title="Very good">
-                4 stars
-              </label>
-              <input
-                type="radio"
-                id="first-rate5"
-                name="review[rating]"
-                value="5"
-              />
-              <label htmlFor="first-rate5" title="Amazing">
-                5 stars
-              </label>
-            </fieldset>
+          {isAuthenticated && <h1>Leave a Review</h1>}
 
-            <FloatingLabel controlId="floatingTextarea2" label="Review">
-              <Form.Control
-                as="textarea"
-                placeholder="Leave a comment here"
-                style={{ height: "100px" }}
-              />
-            </FloatingLabel>
-            <p></p>
-            <p></p>
-            <Button variant="success" type="submit">
-              Submit
-            </Button>
-          </Form>
+          {isAuthenticated ? (
+            <Form className="mb-5 " onSubmit={submitHandler}>
+              <Form.Range min="0" max="5" size="lg" ref={ratingInputRef} />
 
-          <h1>All Reviews</h1>
+              <FloatingLabel controlId="floatingTextarea2" label="Review">
+                <Form.Control
+                  as="textarea"
+                  placeholder="Leave a comment here"
+                  style={{ height: "100px" }}
+                  ref={reviewInputRef}
+                />
+              </FloatingLabel>
+              <p></p>
+              <p></p>
+              <Button variant="success" type="submit">
+                Submit
+              </Button>
+            </Form>
+          ) : (
+            <Alert variant="danger">
+              Please Login to drop a Review{"  "}
+              <Alert.Link href="/login">Login</Alert.Link>
+            </Alert>
+          )}
+
+          <h1 className="mb-5">All Reviews</h1>
           <div className="allReview">
             {props.product &&
               props.product.reviews.map((review) => {

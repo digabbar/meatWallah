@@ -96,7 +96,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
     (r) => r.user.toString() === req.user._id.toString()
   );
   if (!isUserBuyProduct) {
-    return next(new ErrorHandler("user have not buy this product", 400));
+    return next(new ErrorHandler("first buy this product", 400));
   }
   const isReviewed = product.reviews.find(
     (r) => r.user.toString() === req.user._id.toString()
@@ -116,7 +116,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   product.ratings =
     product.reviews.reduce((acc, item) => item.rating + acc, 0) /
     product.reviews.length;
-  await product.save({ validateBeforeSave: false });
+  await product.save();
   res.status(200).json({
     success: true,
   });
