@@ -40,7 +40,6 @@ export const newReview = (id, reviewData) => async (dispatch) => {
       reviewData,
       config
     );
-    console.log(data);
     dispatch(newReviewAction.new_review_success(data.success));
   } catch (e) {
     dispatch(newReviewAction.new_review_fail(e.response.data.message));

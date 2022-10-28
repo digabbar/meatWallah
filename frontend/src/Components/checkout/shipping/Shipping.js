@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import classes from "./Shipping.module.css";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useNavigate } from "react-router-dom";
@@ -8,17 +8,40 @@ import { saveShippingInfo } from "../../slice/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CheckoutSteps from "../CheckoutSteps";
 import AddressAutoComplete from "./AddressAutoComplete";
+import { reset } from "../../slice/cartSlice";
 const Shipping = () => {
   const navigate = useNavigate();
-  const { shippingInfo } = useSelector((state) => state.cart);
+  const { success, shippingInfo } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState(shippingInfo.firstName);
-  const [lastName, setLastName] = useState(shippingInfo.lastName);
-  const [address, setAddress] = useState(shippingInfo.address);
-  const [city, setCity] = useState(shippingInfo.city);
-  const [state, setState] = useState(shippingInfo.state);
-  const [pincode, setPincode] = useState(shippingInfo.pincode);
-  const [mobile, setMobile] = useState(shippingInfo.phoneNo);
+
+  useEffect(() => {
+    if (success) {
+      dispatch(reset());
+      navigate("/confirm");
+    }
+  }, [dispatch, navigate, success]);
+
+  const [firstName, setFirstName] = useState(
+    shippingInfo.firstName === undefined ? "" : shippingInfo.firstName
+  );
+  const [lastName, setLastName] = useState(
+    shippingInfo.lastName === undefined ? "" : shippingInfo.firstName
+  );
+  const [address, setAddress] = useState(
+    shippingInfo.address === undefined ? "" : shippingInfo.address
+  );
+  const [city, setCity] = useState(
+    shippingInfo.city === undefined ? "" : shippingInfo.city
+  );
+  const [state, setState] = useState(
+    shippingInfo.state === undefined ? "" : shippingInfo.state
+  );
+  const [pincode, setPincode] = useState(
+    shippingInfo.pincode === undefined ? "" : shippingInfo.pincode
+  );
+  const [mobile, setMobile] = useState(
+    shippingInfo.phoneNo === undefined ? "" : shippingInfo.phoneNo
+  );
   const submitHandler = (event) => {
     event.preventDefault();
     const shippingInfo = {
@@ -31,7 +54,6 @@ const Shipping = () => {
       state,
     };
     dispatch(saveShippingInfo(shippingInfo));
-    navigate("/confirm");
   };
   const firstNameChangeHandler = (event) => {
     setFirstName(event.target.value);

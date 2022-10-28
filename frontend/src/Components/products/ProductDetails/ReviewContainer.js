@@ -19,8 +19,6 @@ const ReviewContainer = (props) => {
   }
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(ratingInputRef.current.value);
-    console.log(reviewInputRef.current.value);
     dispatch(
       newReview(props.product._id, {
         rating: +ratingInputRef.current.value.trim(),

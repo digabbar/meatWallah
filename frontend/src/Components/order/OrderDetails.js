@@ -28,7 +28,6 @@ const OrderDetails = () => {
   if (!Object.keys(order).length) {
     return;
   }
-  console.log(order);
   return (
     <Fragment>
       <h3 className=" text-muted ">OrderID {order._id} </h3>
@@ -97,7 +96,7 @@ const OrderDetails = () => {
       <div className={classes.orderItems}>
         {order.orderItems.map((item) => {
           return (
-            <div className={classes.cartContainer}>
+            <div className={classes.cartContainer} key={item._id}>
               <div className={classes.imageContainer}>
                 <img src={item.image} alt="cartimage" />
               </div>

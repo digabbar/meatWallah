@@ -5,6 +5,7 @@ export const cartSlice = createSlice({
   initialState: {
     cart: [],
     shippingInfo: {},
+    success: false,
   },
   reducers: {
     addToCart: (state, action) => {
@@ -38,6 +39,11 @@ export const cartSlice = createSlice({
     },
     saveShippingInfo: (state, action) => {
       state.shippingInfo = action.payload;
+      state.success = true;
+    },
+
+    reset: (state, action) => {
+      state.success = false;
     },
   },
 });
@@ -49,4 +55,5 @@ export const {
   decrementQuantity,
   removeItem,
   saveShippingInfo,
+  reset,
 } = cartSlice.actions;
