@@ -3,7 +3,15 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import classes from "./EachProduct.module.css";
 import AddToCartForm from "./AddToCartForm";
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../actions/productActions";
+import { useSelector } from "react-redux";
 function EachProduct(props) {
+  const dispatch = useDispatch();
+  const deleteProductHandler = () => {
+    dispatch(deleteProduct(props.product._id));
+  };
+  const { user } = useSelector((state) => state.auth);
   return (
     <Card>
       <Card.Img variant="top" src={props.product.images[0].url} />
@@ -35,6 +43,21 @@ function EachProduct(props) {
         <Button variant="link" size="lg" type="button">
           <Link to={`/products/${props.product._id}`}>View Details</Link>
         </Button>
+        {user && user.role === "admin" && (
+          <div className="border">
+            <Button variant="link" type="button" onClick={deleteProductHandler}>
+              Delete Product
+            </Button>
+            <Button
+              variant="link"
+              type="button"
+              as={Link}
+              to={`/admin/product/${props.product._id}/update`}
+            >
+              Update Product
+            </Button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   );

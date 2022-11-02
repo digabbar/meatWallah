@@ -145,7 +145,7 @@ const ConfirmOrder = (props) => {
                 <CartItem
                   key={item.product}
                   name={item.name}
-                  product={item.product}
+                  id={item.product}
                   image={item.image}
                   price={item.price}
                   quantity={item.quantity}

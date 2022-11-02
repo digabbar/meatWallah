@@ -1,35 +1,120 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useRef } from "react";
 import { useParams } from "react-router-dom";
 import classes from "./OrderDetails.module.css";
 import Loader from "../UI/Loader";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { orderDetail, clearError } from "../actions/orderActions";
-import { Link } from "react-router-dom";
+import {
+  deleteOrder,
+  updateOrder,
+  orderDetail,
+  clearError,
+} from "../actions/orderActions";
+import { updateOrderAction } from "../slice/updateOrderSlice";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { deleteOrderAction } from "../slice/deleteOrderSlice";
+
 const OrderDetails = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const alert = useAlert();
   const dispatch = useDispatch();
+  const updateOrderInputRef = useRef();
 
   const { loading, error, order } = useSelector((state) => state.orderDetail);
-
+  const {
+    success,
+    error: updateError,
+    loading: updateLoading,
+  } = useSelector((state) => state.updateOrder);
+  const {
+    success: deleteSuccess,
+    error: deleteError,
+    loading: deleteLoading,
+  } = useSelector((state) => state.deleteOrder);
+  const { user } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(orderDetail(params.id));
+    if (deleteSuccess) {
+      alert.success("order deleted Successfully");
+      dispatch(deleteOrderAction.delete_order_reset());
+      navigate("/admin/order");
+    }
+    if (deleteError) {
+      alert.error(deleteError);
+      dispatch(clearError("deleteOrder"));
+    }
+    if (success) {
+      alert.success("Order Update Successfully");
+      dispatch(updateOrderAction.update_order_reset());
+      navigate("/admin/order");
+    }
+    if (updateError) {
+      alert.error(updateError);
+      dispatch(clearError("updateOrder"));
+    }
 
     if (error) {
       alert.error(error);
       dispatch(clearError("orderDetail"));
     }
-  }, [dispatch, alert, error, params.id]);
-  if (loading) {
+  }, [
+    dispatch,
+    alert,
+    error,
+    params.id,
+    success,
+    updateError,
+    navigate,
+    deleteError,
+    deleteSuccess,
+  ]);
+  if (loading || updateLoading || deleteLoading) {
     return <Loader />;
   }
   if (!Object.keys(order).length) {
     return;
   }
+  const orderStatusHandler = (event) => {
+    event.preventDefault();
+    dispatch(
+      updateOrder(order._id, { status: updateOrderInputRef.current.value })
+    );
+  };
+  const deleteOrderHandler = () => {
+    dispatch(deleteOrder(order._id));
+  };
   return (
     <Fragment>
+      {user.role === "admin" && (
+        <div className={classes.updateOrder}>
+          <div className={classes.deleteOrder}>
+            <Button variant="danger" onClick={deleteOrderHandler}>
+              Delete Order
+            </Button>
+          </div>
+          <Form onSubmit={orderStatusHandler}>
+            <div>
+              <Form.Select
+                aria-label="Default select example"
+                ref={updateOrderInputRef}
+              >
+                <option value="shipped">Shipped</option>
+                <option value="processing">Processing</option>
+                <option value="delivered">Delivered</option>
+              </Form.Select>
+            </div>
+
+            <div className="mx-2">
+              <Button variant="primary" type="submit">
+                Update Status
+              </Button>
+            </div>
+          </Form>
+        </div>
+      )}
       <h3 className=" text-muted ">OrderID {order._id} </h3>
       <span className="text-muted ">
         {String(order.createdAt).substring(0, 10)}

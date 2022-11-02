@@ -73,12 +73,10 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
 // get single order => /api/v1/admin/orders
 
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
-  const order = await Order.find({})
-    .populate({
-      path: "orderItems.product",
-      select: "name price",
-    })
-    .populate("user", "name email");
+  const order = await Order.find({}).sort({
+    createdAt: "desc",
+  });
+
   let totalAmount = 0;
   order.forEach((order) => {
     totalAmount += order.totalPrice;

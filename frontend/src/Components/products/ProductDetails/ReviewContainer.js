@@ -7,12 +7,14 @@ import Button from "react-bootstrap/Button";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "react-bootstrap/Alert";
 import { newReview } from "../../actions/productActions";
-
+import { useParams } from "react-router-dom";
+import { deleteReview } from "../../actions/productActions";
 const ReviewContainer = (props) => {
   const ratingInputRef = useRef();
   const reviewInputRef = useRef();
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const params = useParams();
 
   if (!Object.keys(props.product).length) {
     return;
@@ -26,6 +28,9 @@ const ReviewContainer = (props) => {
       })
     );
   };
+  const deleteReviewHandler = (reviewId) => {
+    dispatch(deleteReview(params.id, reviewId));
+  };
   return (
     <Fragment>
       <Col>
@@ -34,7 +39,18 @@ const ReviewContainer = (props) => {
 
           {isAuthenticated ? (
             <Form className="mb-5 " onSubmit={submitHandler}>
-              <Form.Range min="0" max="5" size="lg" ref={ratingInputRef} />
+              <Form.Group className="mb-3" controlId="formBasicRange">
+                <Form.Label>Rate :</Form.Label>
+                <Form.Control
+                  type="range"
+                  min="0"
+                  max="5"
+                  step="1"
+                  size="lg"
+                  ref={ratingInputRef}
+                  className="form-range border-0"
+                />
+              </Form.Group>
 
               <FloatingLabel controlId="floatingTextarea2" label="Review">
                 <Form.Control
@@ -73,9 +89,15 @@ const ReviewContainer = (props) => {
                       </p>
                     </div>
                     <Card.Body>{review.comment}</Card.Body>
-                    <Button variant="link" size="lg">
-                      delete Review
-                    </Button>
+                    {user && user.role === "admin" && (
+                      <Button
+                        variant="link"
+                        size="lg"
+                        onClick={() => deleteReviewHandler(review._id)}
+                      >
+                        delete Review
+                      </Button>
+                    )}
                   </Card>
                 );
               })}

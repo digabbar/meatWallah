@@ -9,6 +9,7 @@ import Loader from "../../UI/Loader";
 import { useAlert } from "react-alert";
 import { clearError } from "../../actions/productActions";
 import { newReviewAction } from "../../slice/newReviewSlice";
+import { deleteReviewAction } from "../../slice/deleteReviewSlice";
 const ProductDetail = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -17,11 +18,29 @@ const ProductDetail = () => {
   const { product, loading, error } = useSelector(
     (state) => state.productDetail
   );
-  const { success, error: reviewError } = useSelector((state) => state.review);
+  const {
+    success: deleteSuccess,
+    loading: deleteLoading,
+    error: deleteError,
+  } = useSelector((state) => state.deleteReview);
+
+  const {
+    loading: reviewLoading,
+    success,
+    error: reviewError,
+  } = useSelector((state) => state.review);
 
   useEffect(() => {
     dispatch(getProductDetails(params.id));
 
+    if (deleteError) {
+      alert.error(deleteError);
+      dispatch(clearError("deleteReview"));
+    }
+    if (deleteSuccess) {
+      alert.success("Review deleted successfully");
+      dispatch(deleteReviewAction.delete_review_reset());
+    }
     if (error) {
       alert.error(error);
       dispatch(clearError("productDetail"));
@@ -33,12 +52,21 @@ const ProductDetail = () => {
     }
 
     if (success) {
-      alert.success("Reivew posted successfully");
+      alert.success("Review posted successfully");
       dispatch(newReviewAction.new_review_reset());
     }
-  }, [dispatch, params.id, alert, error, reviewError, success]);
+  }, [
+    dispatch,
+    params.id,
+    alert,
+    error,
+    reviewError,
+    success,
+    deleteError,
+    deleteSuccess,
+  ]);
 
-  if (loading) {
+  if (loading || reviewLoading || deleteLoading) {
     return <Loader />;
   }
   return (

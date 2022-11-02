@@ -54,7 +54,7 @@ function AddToCartForm(props) {
         variant="dark"
         size="lg"
         type="submit"
-        disabled={props.product.stock === 0 ? true : false}
+        disabled={props.product.stock <= 0}
       >
         Add to Cart
       </Button>

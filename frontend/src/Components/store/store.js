@@ -9,8 +9,18 @@ import CartReducer from "../slice/cartSlice";
 import NewOrderReducer from "../slice/newOrderSlice";
 import MyOrderReducer from "../slice/myOrderSlice";
 import OrderDetailReducer from "../slice/orderDetailSlice";
-import ReviewReducer from "../slice/newReviewSlice";
-
+import NewReviewReducer from "../slice/newReviewSlice";
+import NewProductReducer from "../slice/createNewProductSlice";
+import DeleteProductReducer from "../slice/deleteProductSlice";
+import UpdateProductReducer from "../slice/updateProductSlice";
+import AllOrderReducer from "../slice/allOrderSlice";
+import DeleteOrderReducer from "../slice/deleteOrderSlice";
+import UpdateOrderReducer from "../slice/updateOrderSlice";
+import AllUserReducer from "../slice/allUserSlice";
+import UserDetailReducer from "../slice/userDetailSlice";
+import UpdateUserReducer from "../slice/updateUserSlice";
+import DeleteUserReducer from "../slice/deleteUserSlice";
+import DeleteReviewReducer from "../slice/deleteReviewSlice";
 import storage from "redux-persist/lib/storage";
 import {
   persistStore,
@@ -40,7 +50,18 @@ export const store = configureStore({
     newOrder: NewOrderReducer,
     myOrder: MyOrderReducer,
     orderDetail: OrderDetailReducer,
-    review: ReviewReducer,
+    review: NewReviewReducer,
+    newProduct: NewProductReducer,
+    deleteProduct: DeleteProductReducer,
+    updateProduct: UpdateProductReducer,
+    allOrder: AllOrderReducer,
+    deleteOrder: DeleteOrderReducer,
+    updateOrder: UpdateOrderReducer,
+    allUser: AllUserReducer,
+    userDetail: UserDetailReducer,
+    updateUser: UpdateUserReducer,
+    deleteUser: DeleteUserReducer,
+    deleteReview: DeleteReviewReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -21,6 +21,12 @@ import ConfirmOrder from "./Components/checkout/confirmOrder/ConfirmOrder";
 import OrderCreateSuccess from "./Components/checkout/OrderCreateSuccess";
 import ListOrders from "./Components/order/ListOrders";
 import OrderDetails from "./Components/order/OrderDetails";
+import NewProduct from "./Components/adminComponents/NewProduct";
+import UpdateProduct from "./Components/adminComponents/UpdateProduct";
+import AllOrders from "./Components/adminComponents/AllOrders";
+import AllUser from "./Components/adminComponents/AllUser";
+import UserDetails from "./Components/adminComponents/UserDetails";
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -36,6 +42,7 @@ function App() {
             <Route path="/search/:keyword" element={<Home />} />
             <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
+
             <Route
               path="/shipping"
               element={
@@ -103,6 +110,46 @@ function App() {
               element={
                 <ProtectedRoute isAdmin={false}>
                   <UpdatePassword />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/product"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <NewProduct />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/product/:id/update"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <UpdateProduct />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/order"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <AllOrders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <AllUser />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/users/:id"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <UserDetails />
                 </ProtectedRoute>
               }
             />

@@ -2,6 +2,10 @@ import axios from "axios";
 import { authAction } from "../slice/authSlice";
 import { userAction } from "../slice/userSlice";
 import { forgetAction } from "../slice/forgetSlice";
+import { allUserAction } from "../slice/allUserSlice";
+import { userDetailAction } from "../slice/userDetailSlice";
+import { updateUserAction } from "../slice/updateUserSlice";
+import { deleteUserAction } from "../slice/deleteUserSlice";
 // login
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -131,6 +135,52 @@ export const resetPassword = (token, userData) => async (dispatch) => {
     dispatch(forgetAction.new_password_fail(error.response.data.message));
   }
 };
+export const allUsers = () => async (dispatch) => {
+  try {
+    dispatch(allUserAction.all_user_req());
+    const { data } = await axios.get("/api/v1/admin/users");
+    dispatch(allUserAction.all_user_success(data.users));
+  } catch (error) {
+    dispatch(allUserAction.all_user_fail(error.response.data.message));
+  }
+};
+export const userDetail = (id) => async (dispatch) => {
+  try {
+    dispatch(userDetailAction.user_details_req());
+    const { data } = await axios.get(`/api/v1/admin/users/${id}`);
+    dispatch(userDetailAction.user_details_success(data.user));
+  } catch (error) {
+    dispatch(userDetailAction.user_details_fail(error.response.data.message));
+  }
+};
+export const updateUser = (id, updateData) => async (dispatch) => {
+  try {
+    dispatch(updateUserAction.update_user_req());
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.put(
+      `/api/v1/admin/users/${id}`,
+      updateData,
+      config
+    );
+    dispatch(updateUserAction.update_user_success(data.success));
+  } catch (error) {
+    dispatch(updateUserAction.update_user_fail(error.response.data.message));
+  }
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch(deleteUserAction.delete_user_req());
+    const { data } = await axios.delete(`/api/v1/admin/users/${id}`);
+    dispatch(deleteUserAction.delete_user_success(data.success));
+  } catch (error) {
+    dispatch(deleteUserAction.delete_user_fail(error.response.data.message));
+  }
+};
 
 export const clearError = (key) => async (dispatch) => {
   if (key === "auth") {
@@ -141,5 +191,17 @@ export const clearError = (key) => async (dispatch) => {
   }
   if (key === "forget") {
     dispatch(forgetAction.clear());
+  }
+  if (key === "allUser") {
+    dispatch(allUserAction.clear());
+  }
+  if (key === "userDetail") {
+    dispatch(userDetailAction.clear());
+  }
+  if (key === "updateUser") {
+    dispatch(updateUserAction.clear());
+  }
+  if (key === "deleteUser") {
+    dispatch(deleteUserAction.clear());
   }
 };

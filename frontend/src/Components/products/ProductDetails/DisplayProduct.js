@@ -2,12 +2,12 @@ import React, { Fragment } from "react";
 
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import AddToCartForm from "../AddToCartForm";
 const DisplayProduct = (props) => {
   if (!Object.keys(props.product).length) {
     return;
   }
+
   return (
     <Fragment>
       <Col>
@@ -30,15 +30,6 @@ const DisplayProduct = (props) => {
             <h1>&#8377; {props.product.price}</h1>
             <p></p>
             <AddToCartForm product={props.product} />
-
-            <div className="mt-5">
-              <Button variant="link" size="lg">
-                Update Product
-              </Button>
-              <Button variant="link" size="lg">
-                delete Product
-              </Button>
-            </div>
           </Card.Body>
         </Card>
       </Col>

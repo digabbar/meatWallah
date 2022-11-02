@@ -34,10 +34,10 @@ router
   .put(isAuthenticatatedUser, createProductReview);
 
 router
-  .route("/products/:id/review")
+  .route("/admin/products/:id/review")
   .get(isAuthenticatatedUser, getProductReviews);
 
 router
-  .route("/products/:id/review/:reviewId")
+  .route("/admin/products/:id/review/:reviewId")
   .delete(isAuthenticatatedUser, authorizeRoles("admin"), deleteReview);
 module.exports = router;

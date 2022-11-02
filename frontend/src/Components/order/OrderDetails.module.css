@@ -5,6 +5,16 @@
 .paymentInfo {
   font-size: 24px;
 }
+.updateOrder {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.updateOrder form {
+  display: flex;
+  flex-wrap: nowrap;
+}
 .orderItems {
   font-size: 24px;
   display: flex;
