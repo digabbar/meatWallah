@@ -31,6 +31,7 @@ const AddressAutoComplete = (props) => {
                   placeholder: "Search Places ...",
                   className: "location-search-input",
                 })}
+                required
               />
             </FloatingLabel>
             <div className="autocomplete-dropdown-container">
@@ -67,6 +68,7 @@ const AddressAutoComplete = (props) => {
         placeholder="Address"
         onChange={handleChange}
         value={props.address}
+        required
       />
     </FloatingLabel>;
   }

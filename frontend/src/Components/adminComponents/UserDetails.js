@@ -94,6 +94,7 @@ const UserDetails = () => {
               <Form.Select
                 aria-label="Default select example"
                 ref={roleInputRef}
+                required
               >
                 <option value="user">User</option>
                 <option value="admin">Admin</option>

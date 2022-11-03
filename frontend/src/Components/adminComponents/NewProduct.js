@@ -87,6 +87,7 @@ const NewProduct = () => {
           type="text"
           placeholder="Enter Product Name"
           ref={nameInputRef}
+          required
         />
       </FloatingLabel>
       <FloatingLabel
@@ -98,6 +99,7 @@ const NewProduct = () => {
           type="number"
           placeholder="Enter Product Price"
           ref={priceInputRef}
+          required
         />
       </FloatingLabel>
       <FloatingLabel
@@ -109,6 +111,7 @@ const NewProduct = () => {
           type="text"
           placeholder="Enter Description"
           ref={descriptionInputRef}
+          required
         />
       </FloatingLabel>
       <div>
@@ -118,6 +121,7 @@ const NewProduct = () => {
             type="file"
             placeholder="Select Image"
             onChange={imageChangeHandler}
+            required
           />
         </Form.Group>
         {imagesPreview.map((img) => (
@@ -137,6 +141,7 @@ const NewProduct = () => {
           type="text"
           placeholder="Enter Product Seller"
           ref={sellerInputRef}
+          required
         />
       </FloatingLabel>
       <FloatingLabel controlId="floatingStock" label="Stock" className="mb-3">
@@ -144,6 +149,7 @@ const NewProduct = () => {
           type="number"
           placeholder="Enter Product Stock"
           ref={stockInputRef}
+          required
         />
       </FloatingLabel>
       <FloatingLabel
@@ -151,7 +157,11 @@ const NewProduct = () => {
         label="Category"
         className="mb-3"
       >
-        <Form.Select aria-label="Default select example" ref={categoryInputRef}>
+        <Form.Select
+          aria-label="Default select example"
+          ref={categoryInputRef}
+          required
+        >
           <option>Please Select</option>
           <option value="Chicken">Chickens</option>
           <option value="Mutton">Mutton</option>

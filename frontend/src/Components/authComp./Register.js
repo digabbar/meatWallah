@@ -47,6 +47,7 @@ const Register = () => {
             type="text"
             placeholder="Enter email"
             ref={nameInputRef}
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -55,6 +56,7 @@ const Register = () => {
             type="email"
             placeholder="Enter email"
             ref={emailInputRef}
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -63,6 +65,7 @@ const Register = () => {
             type="password"
             placeholder="Password"
             ref={passwordInputRef}
+            required
           />
         </Form.Group>
 

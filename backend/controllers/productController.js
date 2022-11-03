@@ -10,8 +10,6 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   if (typeof req.body.images === "string") {
     images.push(req.body.images);
   } else {
-    console.log("jha");
-
     images = req.body.images;
   }
 
@@ -34,7 +32,11 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
   req.body.images = imagesLinks;
   req.body.user = req.user._id;
-  const product = await Product.create(req.body);
+  if (imagesLinks.length !== 0) {
+    const product = await Product.create(req.body);
+  } else {
+    return next(new ErrorHandler("Network Error", 500));
+  }
 
   res.status(201).json({
     success: true,

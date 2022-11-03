@@ -50,7 +50,12 @@ const UpdateProfile = () => {
     <Form onSubmit={submitHandler}>
       <Form.Group className="mb-3" controlId="formBasicName">
         <Form.Label>Name</Form.Label>
-        <Form.Control type="text" placeholder="Enter Name" ref={nameInputRef} />
+        <Form.Control
+          type="text"
+          placeholder="Enter Name"
+          ref={nameInputRef}
+          required
+        />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -59,6 +64,7 @@ const UpdateProfile = () => {
           type="email"
           placeholder="Enter Email"
           ref={emailInputRef}
+          required
         />
       </Form.Group>
       <div className="text-end">

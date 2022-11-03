@@ -50,6 +50,7 @@ const Login = () => {
             type="email"
             placeholder="Enter email"
             ref={emailInputRef}
+            required
           />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
@@ -62,6 +63,7 @@ const Login = () => {
             type="password"
             placeholder="Password"
             ref={passwordInputRef}
+            required
           />
         </Form.Group>
         <div className="text-end">

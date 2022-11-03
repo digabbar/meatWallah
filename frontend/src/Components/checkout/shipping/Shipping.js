@@ -95,7 +95,7 @@ const Shipping = () => {
           label="Country/region"
           className={classes.country}
         >
-          <Form.Select aria-label="Floating label select example">
+          <Form.Select aria-label="Floating label select example" required>
             <option value="India">India</option>
           </Form.Select>
         </FloatingLabel>
@@ -110,6 +110,7 @@ const Shipping = () => {
               placeholder="First Name"
               onChange={firstNameChangeHandler}
               value={firstName}
+              required
             />
           </FloatingLabel>
           <FloatingLabel
@@ -122,6 +123,7 @@ const Shipping = () => {
               placeholder="Last Name"
               onChange={lastNameChangeHandler}
               value={lastName}
+              required
             />
           </FloatingLabel>
         </div>
@@ -141,6 +143,7 @@ const Shipping = () => {
               placeholder="City"
               onChange={cityChangeHandler}
               value={city}
+              required
             />
           </FloatingLabel>
           <FloatingLabel
@@ -152,6 +155,7 @@ const Shipping = () => {
               aria-label="Floating label select example"
               onChange={stateChangeHandler}
               value={state}
+              required
             >
               <option value="Andhra Pradesh">Andhra Pradesh</option>
               <option value="Andaman and Nicobar Islands">
@@ -206,6 +210,7 @@ const Shipping = () => {
               placeholder="Pincode"
               onChange={pincodeChangeHandler}
               value={pincode}
+              required
             />
           </FloatingLabel>
         </div>
@@ -219,6 +224,7 @@ const Shipping = () => {
             placeholder="Mobile Number"
             onChange={mobileNoChangeHandler}
             value={mobile}
+            required
           />
         </FloatingLabel>
         <div className="text-end">

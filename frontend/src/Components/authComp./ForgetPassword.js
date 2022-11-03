@@ -36,6 +36,7 @@ const ForgetPassword = () => {
           type="email"
           placeholder="Enter email"
           ref={emailInputRef}
+          required
         />
       </Form.Group>
       <div className="text-end">

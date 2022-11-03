@@ -100,6 +100,7 @@ const OrderDetails = () => {
               <Form.Select
                 aria-label="Default select example"
                 ref={updateOrderInputRef}
+                required
               >
                 <option value="shipped">Shipped</option>
                 <option value="processing">Processing</option>

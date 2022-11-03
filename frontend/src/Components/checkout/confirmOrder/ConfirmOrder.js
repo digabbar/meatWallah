@@ -65,8 +65,7 @@ const ConfirmOrder = (props) => {
         currency: "INR",
         name: "meatWallah",
         description: "Test Transaction",
-        image:
-          "https://images.unsplash.com/photo-1666556253835-9a780f3722fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+
         order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         // callback_url: "http://localhost:4000/api/v1/payment/verification",
         handler: async (response) => {

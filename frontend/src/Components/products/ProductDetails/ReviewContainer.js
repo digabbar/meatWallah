@@ -49,6 +49,7 @@ const ReviewContainer = (props) => {
                   size="lg"
                   ref={ratingInputRef}
                   className="form-range border-0"
+                  required
                 />
               </Form.Group>
 
@@ -58,6 +59,7 @@ const ReviewContainer = (props) => {
                   placeholder="Leave a comment here"
                   style={{ height: "100px" }}
                   ref={reviewInputRef}
+                  required
                 />
               </FloatingLabel>
               <p></p>

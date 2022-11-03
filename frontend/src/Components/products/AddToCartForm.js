@@ -45,7 +45,13 @@ function AddToCartForm(props) {
         <Button variant="danger" type="button" onClick={decreaseQty}>
           -
         </Button>
-        <input type="number" readOnly defaultValue="1" ref={qtyInputRef} />
+        <input
+          type="number"
+          readOnly
+          defaultValue="1"
+          ref={qtyInputRef}
+          required
+        />
         <Button variant="primary" type="button" onClick={increaseQty}>
           +
         </Button>

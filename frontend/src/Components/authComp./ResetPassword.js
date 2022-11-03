@@ -44,6 +44,7 @@ const ResetPassword = () => {
           type="password"
           placeholder="Enter Current Password"
           ref={passwordInputRef}
+          required
         />
       </Form.Group>
 
@@ -53,6 +54,7 @@ const ResetPassword = () => {
           type="password"
           placeholder="Enter New Password"
           ref={confirmPasswordInputRef}
+          required
         />
       </Form.Group>
       <div className="text-end">
